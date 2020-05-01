@@ -23,7 +23,7 @@
 
  	$alt = get_post_meta( $block['attrs']['id'], '_wp_attachment_image_alt', true );
  	if( empty( $alt ) )
- 		return;
+ 		return $content;
 
  	// Empty alt
  	if( false !== strpos( $content, 'alt=""' ) ) {
