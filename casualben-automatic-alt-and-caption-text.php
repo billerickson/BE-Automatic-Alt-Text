@@ -1,12 +1,14 @@
 <?php
 /**
- * Plugin Name: BE Automatic Alt Text
- * Plugin URI: https://github.com/billerickson/BE-Automatic-Alt-Text
+ * Plugin Name: CasualBen Automatic Alt and Caption Text
+ * Plugin URI: https://github.com/DasBen/CasualBen-Automatic-Alt-And-Caption-Text
  * Description: Automatically adds alt text to images in Gutenberg block editor when you add the alt text in the Media Library
- * Version: 1.0.0
- * Author: Bill Erickson
- * Author URI: https://www.billerickson.net
+ * Version: 1.1.0
+ * Author: Benjamin Pahl - CasualBen
+ * Author URI: https://www.casualben.com
  *
+ * Including Version 1.0.0: BE Automatic Alt Text - Bill Erickson - https://github.com/billerickson/BE-Automatic-Alt-Text
+ * 
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU
  * General Public License version 2, as published by the Free Software Foundation.  You may NOT assume
  * that you can use any other version of the GPL.
@@ -15,7 +17,6 @@
  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  */
-
 
  add_filter( 'render_block', function( $content, $block ) {
  	if( 'core/image' !== $block['blockName'] )
