@@ -19,21 +19,26 @@
  */
 
  add_filter( 'render_block', function( $content, $block ) {
- 	if( 'core/image' !== $block['blockName'] )
- 		return $content;
+  // Update Alt Text
+ 	if( 'core/image' == $block['blockName'] ) {
+   $alt = get_post_meta( $block['attrs']['id'], '_wp_attachment_image_alt', true );
+   if( !empty( $alt ) ) {
+				// Empty alt
+				if( false !== strpos( $content, 'alt=""' ) ) {
+					$content = str_replace( 'alt=""', 'alt="' . $alt . '"', $content );
 
- 	$alt = get_post_meta( $block['attrs']['id'], '_wp_attachment_image_alt', true );
- 	if( empty( $alt ) )
- 		return $content;
-
- 	// Empty alt
- 	if( false !== strpos( $content, 'alt=""' ) ) {
- 		$content = str_replace( 'alt=""', 'alt="' . $alt . '"', $content );
-
- 	// No alt
- 	} elseif( false === strpos( $content, 'alt="' ) ) {
- 		$content = str_replace( 'src="', 'alt="' . $alt . '" src="', $content );
- 	}
+				// No alt
+				} elseif( false === strpos( $content, 'alt="' ) ) {
+					$content = str_replace( 'src="', 'alt="' . $alt . '" src="', $content );
+				}
+			}
+			
+			// Update Caption
+   $caption = wp_get_attachment_caption( $block['attrs']['id']);
+   if( !empty( $alt ) ) {
+				$content = str_replace( '<figcaption>.*</figcaption>', '<figcaption>'.$caption.'</figcaption>', $content );
+			}
+  }
 
  	return $content;
  }, 10, 2 );
