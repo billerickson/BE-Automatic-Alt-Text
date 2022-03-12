@@ -19,8 +19,9 @@
  */
 
  add_filter( 'render_block', function( $content, $block ) {
-  // Update Alt Text
+  
  	if( 'core/image' == $block['blockName'] ) {
+	 // Update Alt Text
    $alt = get_post_meta( $block['attrs']['id'], '_wp_attachment_image_alt', true );
    if( !empty( $alt ) ) {
 				// Empty alt
@@ -33,7 +34,7 @@
 				}
 			}
 			
-			// Update Caption
+	 // Update Caption
    $caption = wp_get_attachment_caption( $block['attrs']['id']);
    if( !empty( $alt ) ) {
 				$content = str_replace( '<figcaption>.*</figcaption>', '<figcaption>'.$caption.'</figcaption>', $content );
