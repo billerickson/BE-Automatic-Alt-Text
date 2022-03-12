@@ -5,10 +5,10 @@
  * Description: Automatically adds alt text to images in Gutenberg block editor when you add the alt text in the Media Library
  * Version: 1.1.0
  * Author: Benjamin Pahl - CasualBen
- * Author URI: https://www.casualben.com
+ * Author URI: https://www.casual-ben.com
  *
  * Including Version 1.0.0: BE Automatic Alt Text - Bill Erickson - https://github.com/billerickson/BE-Automatic-Alt-Text
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU
  * General Public License version 2, as published by the Free Software Foundation.  You may NOT assume
  * that you can use any other version of the GPL.
@@ -18,28 +18,21 @@
  *
  */
 
- add_filter( 'render_block', function( $content, $block ) {
-  
- 	if( 'core/image' == $block['blockName'] ) {
-	 // Update Alt Text
-   $alt = get_post_meta( $block['attrs']['id'], '_wp_attachment_image_alt', true );
-   if( !empty( $alt ) ) {
-				// Empty alt
-				if( false !== strpos( $content, 'alt=""' ) ) {
-					$content = str_replace( 'alt=""', 'alt="' . $alt . '"', $content );
+add_filter('render_block', function ($content, $block) {
 
-				// No alt
-				} elseif( false === strpos( $content, 'alt="' ) ) {
-					$content = str_replace( 'src="', 'alt="' . $alt . '" src="', $content );
-				}
-			}
-			
-	 // Update Caption
-   $caption = wp_get_attachment_caption( $block['attrs']['id']);
-   if( !empty( $alt ) ) {
-				$content = str_replace( '<figcaption>.*</figcaption>', '<figcaption>'.$caption.'</figcaption>', $content );
-			}
-  }
+    if ('core/image' == $block['blockName']) {
+        // Update Alt Text
+        $alt = get_post_meta($block['attrs']['id'], '_wp_attachment_image_alt', true);
+        if (!empty($alt)) {
+            $content = preg_replace('/alt=".*"/', 'alt="' . $alt . '"', $content);
+        }
 
- 	return $content;
- }, 10, 2 );
+        // Update Caption
+        $caption = wp_get_attachment_caption($block['attrs']['id']);
+        if (!empty($caption)) {
+            $content = preg_replace('/<figcaption>.*<\/figcaption>/', '<figcaption>' . $caption . '</figcaption>', $content);
+        }
+    }
+
+    return $content;
+}, 10, 2);
