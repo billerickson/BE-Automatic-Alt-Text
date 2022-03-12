@@ -1,8 +1,9 @@
-# BE Automatic Alt Text
+# CasualBen Automatic Alt and Caption Text
 
-Automatically adds alt text to images in Gutenberg block editor when you add the alt text in the Media Library
+Automatically adds alt and caption text to images in Gutenberg block editor when you add the alt or caption text in the Media Library.
+This is an Extension of [BE-Automatic-Alt-Text](https://github.com/billerickson/BE-Automatic-Alt-Text). I've added the functionality to auto update the caption too.
 
-### Description
+### Original Description
 When you insert an image into a post, the HTML is “hardcoded” into the post content. You can edit the image’s alt text in the Media Library, but this will only include the alt text for future uses of the image. It won’t automatically update all of the past uses of that image in your older posts.
 
 The code below fixes this. When a page loads, it finds all of the images that are missing alt text and looks to see if you’ve specified an alt text for it in the Media Library. If so, it updates the image before loading the page.
