@@ -3,7 +3,7 @@
  * Plugin Name: CasualBen Automatic Alt and Caption Text
  * Plugin URI: https://github.com/DasBen/CasualBen-Automatic-Alt-And-Caption-Text
  * Description: Automatically adds alt text and captions to images in Gutenberg block editor when you add or modify in the Media Library
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: Benjamin Pahl - CasualBen
  * Author URI: https://www.casual-ben.com
  *
@@ -30,6 +30,8 @@ add_filter('render_block', function ($content, $block) {
         // Update Caption
         $caption = wp_get_attachment_caption($block['attrs']['id']);
         if (!empty($caption)) {
+            $content = str_replace("</figure>", "<figcaption>".$caption."</figcaption></figure>", $content);					
+        } else {
             $content = preg_replace('/<figcaption>.*<\/figcaption>/', '<figcaption>' . $caption . '</figcaption>', $content);
         }
     }
