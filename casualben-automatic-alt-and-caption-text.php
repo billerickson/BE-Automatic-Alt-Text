@@ -30,6 +30,8 @@ add_filter('render_block', function ($content, $block) {
         // Update Caption
         $caption = wp_get_attachment_caption($block['attrs']['id']);
         if (!empty($caption)) {
+            $content = str_replace("</figure>", "<figcaption>".$caption."</figcaption></figure>", $content);					
+        } else {
             $content = preg_replace('/<figcaption>.*<\/figcaption>/', '<figcaption>' . $caption . '</figcaption>', $content);
         }
     }
