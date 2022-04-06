@@ -1,0 +1,32 @@
+name: Deploy Docker Image on Release
+on:
+  release:
+    branches: [ main ]
+    types: [ published ]
+
+jobs:
+  docker_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build project
+        run: |
+          # composer install --no-dev --optimize-autoloader
+      - name: Create release
+        run: |
+          rsync -arv --exclude='.dist/' --exclude='.git/' --exclude='.github/' --exclude='.gitignore' . ./release
+      - name: Create artifact
+        uses: montudor/action-zip@v0.1.0
+        with:
+          args: zip -X -r release.zip ./release
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: release
+          path: release.zip
+      - name: Upload to release
+        uses: JasonEtco/upload-to-release@master
+        with:
+          args: release.zip application/zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
